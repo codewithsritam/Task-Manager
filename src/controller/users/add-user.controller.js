@@ -1,4 +1,7 @@
 const User = require('../../model/user.model');
+const asyncHandler = require('../../utils/asyncHandler');
+const sendApiResponse = require('../../utils/responseUtils');
+const genrateToken = require('../../middleware/make-token');
 const bcrypt = require('bcrypt');
 
 const addUser = async (req, res) => {
@@ -11,9 +14,12 @@ const addUser = async (req, res) => {
     });
     await user.save();
 
+    const token = genrateToken(user._id);
+
     res.status(200).json({
         message: 'User added successfully',
         user: user,
+        token: token,
     });
 }
 
