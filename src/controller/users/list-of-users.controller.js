@@ -15,15 +15,11 @@ const listOfUsers = asyncHandler(async (req, res) => {
 
 // Individual user details
 const getUser = asyncHandler(async (req, res) => {
-    const { id } = req.params;
+    const { id } = req.user;
     const user = await User.findById(id, { __v: 0 }).lean();
     if (!user) {
         return sendApiResponse(res, 404, 'User not found');
     }
-
-    // replace 
-    
-    
 
     return sendApiResponse(res, 200, 'User details', user);
 })

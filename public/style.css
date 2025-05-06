@@ -1,11 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-.fBetween{
+
+body {
+    width: 30rem;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 6px;
+    font-family: "Roboto", sans-serif;
+}
+nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    padding: 2rem 1rem 4rem 1rem;
+}
+.logo {
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.person {
+    cursor: pointer;
+}
+.profile {
+    position: absolute;
+    top: -200px;
+    right: 0;
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transition: all 0.3s ease-in;
+    z-index: 1;
+}
+#logMe, hr {
+    margin-top: 5px;
+}
+.primary-btn {
+    background-color: rgb(12, 114, 231);
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+section {
     padding: 0 1rem;
+}
+.flexCenter {
+    display: flex;
+    align-items: center;
+}
+.jBetween {
+    justify-content: space-between;
+}
+.mt-1 {
+    margin-top: 1rem;
+}
+.mb-1 {
+    margin-bottom: 1rem;
+}
+.line {
+    border-bottom: 1px solid #bbb7b7;
+    padding-bottom: 6px;
+}
+.priority {
+    border: 1px solid #bbb7b7;
+    border-radius: 50px;
+    padding: 10px;
+    font-weight: 500;
+}
+.description {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: .7;
+}
+.pointer {
+    cursor: pointer;
+}
+.formContainer {
+    display: none;
+    position: relative;
+    width: 26rem;
+    margin: auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 1rem;
+    border-radius: 4px;
+}
+.flexCoulmn {
+    display: flex;
+    flex-direction: column;
+}
+.flexCoulmn label {
+    font-size: 14px;
+}
+.mt-0p5 {
+    margin-top: 0.5rem;
+}
+.w100 {
+    width: 100%;
+}
+.inputField {
+    padding: 10px;
+    outline: none;
+    border-radius: 2px;
+    border: .5px solid #bbb7b7;
+    margin-top: 4px;
+}
+.cross {
+    position: absolute;
+    right: -12px;
+    top: -20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+#sign {
+    color: rgb(12, 114, 231);
+    margin-left: 5px;
+    font-weight: 500;
+    cursor: pointer;
 }
