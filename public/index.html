@@ -227,7 +227,7 @@
                 .then(response => response.json())
                 .then(result => {
                     console.log('Login Result:', result);
-                    if (!result.success) {
+                    if (result.code !== 200) {
                         alert('Login failed. Please check your credentials.');
                         return;
                     }
@@ -248,19 +248,10 @@
 
         const taskContainer = document.querySelector('section');
 
-        // if task container is empty then show message
-        if (taskContainer.innerHTML === '') {
-            taskContainer.innerHTML = `<div class='empty'>
-                <img src="./empty.png" alt="Empty" width="100%">
-                <h2 class="mt-1 tCenter">No tasks available</h2>
-            </div>`;
-        } else {
-            taskContainer.innerHTML = ''; // Clear tasks            
-        }
-
         // Logout
         document.getElementById('logOut').addEventListener('click', () => {
             localStorage.removeItem('token');
+            PersonImage.innerHTML = `<img src="./person.png" alt="Person">`;
             document.getElementById('show').style.display = 'none';
             document.getElementById('logMe').style.display = 'block';
             taskContainer.innerHTML = ''; // Clear tasks
@@ -283,13 +274,18 @@
                 return response.json();
             })
             .then(data => {
+                taskContainer.innerHTML = ''; // Clear existing tasks
+
+                if (data.data.tasks.length === 0) {
+                    taskContainer.innerHTML = `
+                        <div class='empty'>
+                        <img src="./empty.png" alt="Empty" width="100%">
+                        <h2 class="mt-1 tCenter">No tasks available</h2>
+                        </div>`;
+                    return;
+                }
+
                 data.data.tasks.forEach(taskGroup => {
-                    if (taskGroup === null) {
-                        taskContainer.innerHTML = `<div class='empty'>
-                <img src="./empty.png" alt="Empty" width="100%">
-                <h2 class="mt-1 tCenter">No tasks available</h2>
-            </div>`;
-                    }
                     const groupElement = document.createElement('div');
                     groupElement.classList.add('mb-4');
 
@@ -359,6 +355,7 @@
                     alert('Successfully, your task created.');
                     document.querySelector('#taskForm').style.display = 'none';
                     document.querySelector('.overlay').style.display = 'none';
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.log('Login Failed:', error);
