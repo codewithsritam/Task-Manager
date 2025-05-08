@@ -15,6 +15,17 @@ body {
     border-radius: 6px;
     font-family: "Roboto", sans-serif;
 }
+@media (max-width: 30rem) {
+    body {
+        width: 100%;
+    }
+    nav {
+        padding: 1rem !important;
+    }
+    .formContainer {
+        width: 90% !important;
+    }
+}
 nav {
     display: flex;
     align-items: center;
@@ -58,7 +69,8 @@ nav {
     margin-top: 5px;
 }
 .primary-btn {
-    background-color: rgb(12, 114, 231);
+    /* background-color: rgb(12, 114, 231); */
+    background-color: #6C63FF;
     color: #fff;
     padding: 10px;
     border: none;
@@ -131,7 +143,10 @@ section {
 }
 .formContainer {
     display: none;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 26rem;
     margin: auto;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

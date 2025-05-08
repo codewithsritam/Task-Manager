@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 // List all tasks for a user
 const listOfTasks = asyncHandler(async (req, res) => {
     const userId = new mongoose.Types.ObjectId(req.user.id);
-    console.log('userId:', userId);
 
     let tasks = await Task.aggregate([
         { $match: { createdBy: userId } },
@@ -68,17 +67,6 @@ const listOfTasks = asyncHandler(async (req, res) => {
         date: task.date,
         tasks: task.tasks
     }));
-
-    console.log('tasks:', tasks);
-
-    // const tasks = await Task.find({createdBy: userId})
-    //     .populate('createdBy', 'name email')
-    //     .sort({ createdAt: -1 })
-    //     .lean();
-
-    if (!tasks) {
-        return sendApiResponse(res, 404, "No tasks found");
-    }
 
     return sendApiResponse(res, 200, "Tasks retrieved successfully", {
         tasks: tasks

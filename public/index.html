@@ -25,7 +25,12 @@
     </nav>
 
     <!-- Show Tasks -->
-    <section class="mt-2"></section>
+    <section class="mt-2">
+        <div class='empty'>
+            <img src="./empty.png" alt="Empty" width="100%">
+            <h2 class="mt-1 tCenter">No tasks available</h2>
+            </div>
+    </section>
 
     <div class="overlay"></div>
     <div id="logForm" class="formContainer">
@@ -102,6 +107,9 @@
     </div>
 
     <script>
+        // Task Container
+        const taskContainer = document.querySelector('section');
+    
         const PersonImage = document.querySelector('.person');
         PersonImage.addEventListener('click', () => {
             document.querySelector('.profile').style.top = '50px'
@@ -141,7 +149,7 @@
         });
 
         // Sign up
-        const baseUrl = 'http://localhost:4000/api/v1/';
+        const baseUrl = 'https://task-manager-x8c7.onrender.com/api/v1/';
         const signupApi = `${baseUrl}users`;
 
         document.querySelector('#signupForm').addEventListener('submit', (e) => {
@@ -246,7 +254,6 @@
                 });
         });
 
-        const taskContainer = document.querySelector('section');
 
         // Logout
         document.getElementById('logOut').addEventListener('click', () => {
