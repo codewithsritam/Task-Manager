@@ -16,11 +16,9 @@
         <div class="profile">
             <div id="show">
                 <h2 id="Name"></h2>
-                <p id="Email"></p>
-                <p id="addTask">Add Task</p>
-                <button id="logOut" class="primary-btn mt-0p5">Logout</button>
+                <p id="Email" class="opa7"></p>
+                <button id="logOut" class="primary-btn w100 mt-0p8">Logout</button>
             </div>
-            <!-- <button id="logMe" class="primary-btn">Login</button> <img src="./person.png" alt="Person"> -->
         </div>
     </nav>
 
@@ -35,6 +33,7 @@
     <div class="overlay"></div>
     <div id="logForm" class="formContainer">
         <span class="cross">&#10006;</span>
+        <h2 class="mb-2 tCenter">Login</h2>
         <form id="loginForm">
             <div class="flexCoulmn">
                 <label for="email">Email</label>
@@ -52,6 +51,7 @@
 
     <div id="signForm" class="formContainer">
         <span class="cross">&#10006;</span>
+        <h2 class="mb-2 tCenter">Sign up</h2>
         <form id="signupForm">
             <div class="flexCoulmn">
                 <label for="name">Name</label>
@@ -70,9 +70,15 @@
         </form>
     </div>
 
+    <!-- Add Task Icon -->
+    <div class="plusIcon" id="addTask">
+        <img src="./plus.png" alt="Plus">
+    </div>
+
     <!-- Add Tasks -->
     <div id="taskForm" class="formContainer">
         <span class="cross">&#10006;</span>
+        <h2 class="mb-2 tCenter">Add Task</h2>
         <form id="userTasksForm">
             <div class="flexCoulmn">
                 <label for="title">Title</label>
@@ -112,8 +118,10 @@
         const taskContainer = document.querySelector('section');
 
         const PersonImage = document.querySelector('.person');
+        const profile = document.querySelector('.profile');
         PersonImage.addEventListener('click', () => {
-            document.querySelector('.profile').style.top = '50px'
+            const isVisible = profile.style.top === '80px';
+            profile.style.top = isVisible ? '-300px' : '80px';
         });
 
         // When click login button then display block 
@@ -151,8 +159,8 @@
         });
 
         // Sign up
-        // const baseUrl = 'http://localhost:4000/api/v1/';
-        const baseUrl = 'https://task-manager-x8c7.onrender.com/api/v1/';
+        const baseUrl = 'http://localhost:4000/api/v1/';
+        // const baseUrl = 'https://task-manager-x8c7.onrender.com/api/v1/';
         const signupApi = `${baseUrl}users`;
 
         document.querySelector('#signupForm').addEventListener('submit', (e) => {
@@ -215,11 +223,15 @@
         // Check if token is available in local storage
         // If token is available, show the user details and hide the login button
         if (token) {
+            PersonImage.style.display = 'grid';
             document.getElementById('show').style.display = 'block';
             document.getElementById('logMe').style.display = 'none';
+            addTask.style.display = 'block';
         } else {
+            PersonImage.style.display = 'none';
             document.getElementById('show').style.display = 'none';
             document.getElementById('logMe').style.display = 'block';
+            addTask.style.display = 'none';
         }
 
         // Login

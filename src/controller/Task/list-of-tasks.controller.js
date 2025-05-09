@@ -30,7 +30,7 @@ const listOfTasks = asyncHandler(async (req, res) => {
                 weekday: {
                     $cond: [
                         { $ifNull: ["$_id", false] },
-                        { $dateToString: { format: "%w", date: "$_id" } },
+                        { $dayOfWeek: "$_id" }, // returns 1 (Sunday) to 7 (Saturday)
                         null
                     ]
                 },
@@ -63,7 +63,7 @@ const listOfTasks = asyncHandler(async (req, res) => {
     // Map numeric weekday to full name in JS
     const daysMap = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     tasks = tasks.map(task => ({
-        day: task.weekday >= 0 && task.weekday <= 6 ? daysMap[parseInt(task.weekday)] : "No Day",
+        day: typeof task.weekday === 'number' ? daysMap[(task.weekday - 1)] : "No Day",
         date: task.date,
         tasks: task.tasks
     }));
