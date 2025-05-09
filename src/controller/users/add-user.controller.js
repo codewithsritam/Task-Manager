@@ -4,8 +4,14 @@ const sendApiResponse = require('../../utils/responseUtils');
 const genrateToken = require('../../middleware/make-token');
 const bcrypt = require('bcrypt');
 
-const addUser = async (req, res) => {
+const addUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
+
+    const existingUser = await User.find({ email: email });
+    if (existingUser) {
+        return sendApiResponse(res, 404, 'User already exists');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
         name: name,
@@ -21,6 +27,6 @@ const addUser = async (req, res) => {
         user: user,
         token: token,
     });
-}
+});
 
 module.exports = addUser;

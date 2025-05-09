@@ -11,8 +11,8 @@
 <body>
     <nav>
         <h1 class="logo">iTask</h1>
-        <!-- <button id="logMe" class="primary-btn">Login</button> -->
-        <div class="person"><img src="./person.png" alt="Person"></div>
+        <button id="logMe" class="primary-btn">Login</button>
+        <div class="person"></div>
         <div class="profile">
             <div id="show">
                 <h2 id="Name"></h2>
@@ -20,7 +20,7 @@
                 <p id="addTask">Add Task</p>
                 <button id="logOut" class="primary-btn mt-0p5">Logout</button>
             </div>
-            <button id="logMe" class="primary-btn">Login</button>
+            <!-- <button id="logMe" class="primary-btn">Login</button> <img src="./person.png" alt="Person"> -->
         </div>
     </nav>
 
@@ -29,7 +29,7 @@
         <div class='empty'>
             <img src="./empty.png" alt="Empty" width="100%">
             <h2 class="mt-1 tCenter">No tasks available</h2>
-            </div>
+        </div>
     </section>
 
     <div class="overlay"></div>
@@ -55,15 +55,16 @@
         <form id="signupForm">
             <div class="flexCoulmn">
                 <label for="name">Name</label>
-                <input type="text" class="inputField" name="name" id="name" placeholder="Enter your name">
+                <input type="text" class="inputField" name="name" id="name" placeholder="Enter your name" required>
             </div>
             <div class="flexCoulmn">
                 <label for="email">Email</label>
-                <input type="text" class="inputField" name="email" id="email" placeholder="Enter your email">
+                <input type="text" class="inputField" name="email" id="email" placeholder="Enter your email" required>
             </div>
             <div class="flexCoulmn mt-0p5">
                 <label for="password">Password</label>
-                <input type="text" class="inputField" name="password" id="password" placeholder="Enter your password">
+                <input type="text" class="inputField" name="password" id="password" placeholder="Enter your password"
+                    required>
             </div>
             <button class="primary-btn mt-1 w100">Signin</button>
         </form>
@@ -109,7 +110,7 @@
     <script>
         // Task Container
         const taskContainer = document.querySelector('section');
-    
+
         const PersonImage = document.querySelector('.person');
         PersonImage.addEventListener('click', () => {
             document.querySelector('.profile').style.top = '50px'
@@ -118,7 +119,6 @@
         // When click login button then display block 
         const Logme = document.querySelector('#logMe');
         Logme.addEventListener('click', () => {
-            console.log('Login button clicked');
             document.querySelector('.overlay').style.display = 'block';
             document.querySelector('#logForm').style.display = 'block';
             document.querySelector('.profile').style.top = '-200px'
@@ -126,10 +126,12 @@
         });
 
         // Remove login popup
-        const Cross = document.querySelector('.cross');
-        Cross.addEventListener('click', () => {
-            document.querySelector('.formContainer').style.display = 'none';
-            document.querySelector('.overlay').style.display = 'none';
+        const crosses = document.querySelectorAll('.cross');
+        crosses.forEach(cross => {
+            cross.addEventListener('click', () => {
+                cross.closest('.formContainer').style.display = 'none';
+                document.querySelector('.overlay').style.display = 'none';
+            });
         });
 
         // sign popup
@@ -149,7 +151,7 @@
         });
 
         // Sign up
-        const baseUrl = 'https://task-manager-x8c7.onrender.com/api/v1/';
+        const baseUrl = 'http://localhost:4000/api/v1/';
         const signupApi = `${baseUrl}users`;
 
         document.querySelector('#signupForm').addEventListener('submit', (e) => {
@@ -170,6 +172,10 @@
             })
                 .then(response => response.json())
                 .then(result => {
+                    if (result.code !== 200) {
+                        alert('Signin failed. Please check your credentials.');
+                        return;
+                    }
                     alert('Successfully, your account created.');
                     window.location.reload();
                     localStorage.setItem('token', result.token);
@@ -177,7 +183,7 @@
                     document.querySelector('#signForm').style.display = 'none';
                 })
                 .catch(error => {
-                    console.log('Login Failed:', error);
+                    console.log('Signin Failed:', error);
                 });
         });
 
@@ -244,6 +250,7 @@
                     // reload page after login
                     window.location.reload();
                     localStorage.setItem('token', result.data.token);
+                    // PersonImage.style.display = 'grid';
                     document.querySelector('.overlay').style.display = 'none';
                     document.querySelector('#logForm').style.display = 'none';
                     document.getElementById('show').style.display = 'block';
@@ -258,10 +265,14 @@
         // Logout
         document.getElementById('logOut').addEventListener('click', () => {
             localStorage.removeItem('token');
-            PersonImage.innerHTML = `<img src="./person.png" alt="Person">`;
+            PersonImage.style.display = 'none';
             document.getElementById('show').style.display = 'none';
             document.getElementById('logMe').style.display = 'block';
-            taskContainer.innerHTML = ''; // Clear tasks
+            taskContainer.innerHTML = `
+                        <div class='empty'>
+                        <img src="./empty.png" alt="Empty" width="100%">
+                        <h2 class="mt-1 tCenter">No tasks available</h2>
+                        </div>`;
         });
 
         // Task API
