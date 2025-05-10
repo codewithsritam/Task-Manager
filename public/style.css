@@ -205,7 +205,8 @@ section {
     font-size: 2rem;
     cursor: pointer;
 }
-#sign {
+#sign,
+#login {
     color: rgb(12, 114, 231);
     margin-left: 5px;
     font-weight: 500;

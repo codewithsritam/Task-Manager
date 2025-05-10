@@ -44,7 +44,7 @@
                 <input type="text" class="inputField" name="password" id="password" placeholder="Enter your password"
                     required>
             </div>
-            <p class="flexCenter mt-0p5">If your account not available<span id="sign">signin</span></p>
+            <p class="flexCenter mt-0p5">New to iTask?<span id="sign">Create an account</span></p>
             <button class="primary-btn mt-1 w100">Login</button>
         </form>
     </div>
@@ -66,6 +66,7 @@
                 <input type="text" class="inputField" name="password" id="password" placeholder="Enter your password"
                     required>
             </div>
+            <p class="flexCenter mt-0p5">Existing User?<span id="login">Log in</span></p>
             <button class="primary-btn mt-1 w100">Signin</button>
         </form>
     </div>
@@ -142,6 +143,14 @@
             });
         });
 
+        // Login popup
+        const Login = document.querySelector('#login');
+        Login.addEventListener('click', () => {
+            document.querySelector('#logForm').style.display = 'block';
+            document.querySelector('.overlay').style.display = 'block';
+            document.querySelector('#signForm').style.display = 'none';
+        });
+
         // sign popup
         const Signin = document.querySelector('#sign');
         Signin.addEventListener('click', () => {
@@ -159,8 +168,8 @@
         });
 
         // Sign up
-        // const baseUrl = 'http://localhost:4000/api/v1/';
-        const baseUrl = 'https://task-manager-x8c7.onrender.com/api/v1/';
+        const baseUrl = 'http://localhost:4000/api/v1/';
+        // const baseUrl = 'https://task-manager-x8c7.onrender.com/api/v1/';
         const signupApi = `${baseUrl}users`;
 
         document.querySelector('#signupForm').addEventListener('submit', (e) => {
@@ -181,7 +190,7 @@
             })
                 .then(response => response.json())
                 .then(result => {
-                    if (result.code !== 200) {
+                    if (result.code === 404) {
                         alert('Signin failed. Please check your credentials.');
                         return;
                     }

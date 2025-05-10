@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const addUser = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
-    const existingUser = await User.find({ email: email });
+    const existingUser = await User.findOne({ email: email });
     if (existingUser) {
         return sendApiResponse(res, 404, 'User already exists');
     }
